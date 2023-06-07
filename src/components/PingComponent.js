@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from 'react';
 import PingConfirm from "./PingConfirm";
 import payload from './payload.json'
+import { Button, Segment, Icon } from 'semantic-ui-react'
 
 function PingComponent() {
     
@@ -29,15 +30,18 @@ function PingComponent() {
   }
 
   return (
-    <div className="card">
+    <Segment>
       <h2>This is to ping the server</h2>
-      <div className="actions">
-        <button className="btnPing" onClick={pingUmbauServer}>
-          Ping
-        </button>
+      <div>
+        <Button animated color="green" onClick={pingUmbauServer}>
+          <Button.Content hidden>Ping</Button.Content>
+          <Button.Content visible>
+            <Icon name="desktop" />
+          </Button.Content>
+        </Button>
       </div>
       {serverStatus && <PingConfirm text="Ping successful" onCancel={closeServerPopUp} />}
-    </div>
+    </Segment>
   );
 }
 
