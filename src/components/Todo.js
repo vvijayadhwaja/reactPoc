@@ -1,36 +1,60 @@
-import { useState } from "react";
+import { Component } from "react";
 import Modal from "./Modal";
 import Backdrop from "./Backdrop";
-import { Button, Segment, Icon } from "semantic-ui-react";
+import { Button, Segment, Icon, Progress } from "semantic-ui-react";
 
-function Todo(props) {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+class Todo extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      setModalIsOpen: false
+    };
+    this.state = { percent: 5 }
+    this.deleteHandler = this.deleteHandler.bind(this);
 
-  function deleteHandler() {
-    setModalIsOpen(true);
+
+  this.increment = () =>
+  this.setState((prevState) => ({
+    percent: prevState.percent >= 100 ? 0 : prevState.percent + 20,
+  }))
   }
 
-  function closeModalHandler() {
-    setModalIsOpen(false);
+  deleteHandler() {
+    this.setState({ setModalIsOpen: true })
   }
 
-  return (
-    <Segment>
-      <h2>{props.text}</h2>
-      <div>
-        <Button animated color="red" onClick={deleteHandler}>
-          <Button.Content hidden>Delete</Button.Content>
-          <Button.Content visible>
-            <Icon name="trash" />
-          </Button.Content>
-        </Button>
-      </div>
-      {modalIsOpen && (
-        <Modal onCancel={closeModalHandler} onConfirm={closeModalHandler} />
+  closeModalHandler= ()  => {
+    this.setState({ setModalIsOpen: false })
+  }
+  // const [modalIsOpen, setModalIsOpen] = useState(false);
+render() {
+    return (
+      <Segment>
+        <h2>{this.props.text}</h2>
+        <div>
+          <h4>Record your Progress!!</h4>
+          <Progress percent={this.state.percent} indicating />
+          <Button onClick={this.increment}>Increment</Button>
+        </div>
+        <br/>
+        <div>
+          <Button animated color="red"  
+          onClick = {this.deleteHandler}        >
+            <Button.Content hidden>Delete</Button.Content>
+            <Button.Content visible>
+              <Icon name="trash" />
+            </Button.Content>
+          </Button>
+        </div>
+      {this.state.setModalIsOpen && (
+        <Modal onCancel={() => this.closeModalHandler()} onConfirm={() => this.closeModalHandler()} />
       )}
-      {modalIsOpen && <Backdrop onCancel={closeModalHandler} />}
+      {this.state.setModalIsOpen && <Backdrop onCancel={() => this.closeModalHandler()} />}
     </Segment>
   );
+
+  }
+
 }
 
 export default Todo;
