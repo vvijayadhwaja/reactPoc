@@ -30,7 +30,7 @@
 #       timeout: 300
 #       runas: root
 
-# version: 0.2
+version: 0.2
 
 phases:
   pre_build:
