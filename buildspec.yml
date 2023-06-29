@@ -30,20 +30,20 @@
 #       timeout: 300
 #       runas: root
 
-version: 0.2
+# version: 0.2
 
-phases:
-  pre_build:
-    commands:
-      - echo Build started on `date`
-      - npm install
-  build:
-    commands:
-      - echo Build completed on `date`
-      - npm run build
+# phases:
+#   pre_build:
+#     commands:
+#       - echo Build started on `date`
+#       - npm install
+#   build:
+#     commands:
+#       - echo Build completed on `date`
+#       - npm run build
 
-artifacts:
-  files:
-    - '**/*'
-  discard-paths: no
-  base-directory: build
+# artifacts:
+#   files:
+#     - '**/*'
+#   discard-paths: no
+#   base-directory: build
