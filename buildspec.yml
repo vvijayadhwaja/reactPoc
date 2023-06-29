@@ -1,0 +1,47 @@
+# version: 0.2
+
+# phases:
+#   pre_build:
+#     commands:
+#       - npm install
+#   build:
+#     commands:
+#       - npm run build
+#   post_build:
+#     commands:
+#       - aws s3 cp --recursive ./build <bucket name>/
+#       - aws cloudfront create-invalidation --distribution-id <>
+
+# version: 0.0
+# os: linux
+# files:
+#   - source: /index.html
+#     destination: /var/www/html/
+# hooks:
+#   BeforeInstall:
+#     - location: scripts/install_dependencies
+#       timeout: 300
+#       runas: root
+#     - location: scripts/start_server
+#       timeout: 300
+#       runas: root
+#   ApplicationStop:
+#     - location: scripts/stop_server
+#       timeout: 300
+#       runas: root
+
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - npm install
+  build:
+    commands:
+      - npm run build
+
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: no
+  base-directory: build
