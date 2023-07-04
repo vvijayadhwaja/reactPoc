@@ -37,13 +37,18 @@ phases:
     commands:
       - echo Build started on `date`
       - npm install
+  test_build:
+    commands:
+      - echo Test started on `date`
+      - npm test
   build:
     commands:
       - echo Build completed on `date`
       - npm run build
 
 artifacts:
+  base-directory: build
   files:
     - '**/*'
-  discard-paths: no
-  base-directory: build
+  # discard-paths: no
+  
