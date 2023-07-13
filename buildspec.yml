@@ -55,6 +55,4 @@ artifacts:
     - '**/*'
   # discard-paths: no
   # base-directory: build
-
-  # test to copy only build files 
   
