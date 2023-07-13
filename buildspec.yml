@@ -44,7 +44,8 @@ phases:
   build:
     commands:
       - echo Build completed on `date`
-      - npm run build
+      - npm run build     
+      - ls -R build
   post_build:
     commands:
       - aws s3 cp build/ s3://demo-bucket-for-poc/ --recursive
@@ -52,8 +53,8 @@ phases:
 artifacts:
   files:
     - '**/*'
-  discard-paths: no
-  base-directory: build
+  # discard-paths: no
+  # base-directory: build
 
   # test to copy only build files 
   
