@@ -30,31 +30,92 @@
 #       timeout: 300
 #       runas: root
 
-version: 0.2
+  version: 0.2
 
-phases:
-  pre_build:
-    commands:
-      - echo Build started on `date`
-      - npm install
-  test_build:
-    commands:
-      - echo Test started on `date`
-      - npm test
-  build:
-    commands:
-      - echo Build completed on `date`
-      - npm run build     
-      - ls -R build
-  post_build:
-    commands:
-      - aws s3 cp build/ s3://demo-bucket-for-poc/ --recursive
-
-artifacts:
-  files:
-    - '**/*'
+  phases:
+    pre_build:
+      commands:
+        - echo Build started on `date`
+        - npm install
+    test_build:
+      commands:
+        - echo Test started on `date`
+        - npm test
+    build:
+      commands:
+        - echo Build completed on `date`
+        - npm run build     
+        - ls -R build
+    post_build:
+      commands:
+        - cd build/
+        - aws s3 cp s3://demo-bucket-for-poc/ --recursive
+  artifacts:
+    files:
+      - '**/*'
   # discard-paths: no
   # base-directory: build
+
+  Deploy:
+  #     AWSTemplateFormatVersion: '2010-09-09'
+  # Resources:
+  #   myStackWithParams:
+  #     Type: AWS::CloudFormation::Stack
+  #     Properties:
+  #       TemplateURL: https://s3.amazonaws.com/cloudformation-templates-us-east-1/EC2ChooseAMI.template
+  #       Parameters:
+  #         InstanceType: t2.micro
+  #         KeyName: mykey
+
+  AWSTemplateFormatVersion: '2010-09-09'
+  Resources:
+  myDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+        - DomainName: demo-bucket-for-poc.s3-website-us-east-1.amazonaws.com
+          Id: myS3Origin
+          S3OriginConfig:
+            OriginAccessIdentity: origin-access-identity/cloudfront/E127EXAMPLE51Z
+        Enabled: 'true'
+        Comment: Some comment
+        DefaultRootObject: index.html
+        Logging:
+          IncludeCookies: 'false'
+          Bucket: mylogs.s3.amazonaws.com
+          Prefix: myprefix
+        Aliases:
+        - mysite.example.com
+        - yoursite.example.com
+        DefaultCacheBehavior:
+          AllowedMethods:
+          - DELETE
+          - GET
+          - HEAD
+          - OPTIONS
+          - PATCH
+          - POST
+          - PUT
+          TargetOriginId: myS3Origin
+          ForwardedValues:
+            QueryString: 'false'
+            Cookies:
+              Forward: none
+          TrustedSigners:
+          - 1234567890EX
+          - 1234567891EX
+          ViewerProtocolPolicy: allow-all
+        PriceClass: PriceClass_200
+        Restrictions:
+          GeoRestriction:
+            RestrictionType: whitelist
+            Locations:
+            - AQ
+            - CV
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: 'true'
+
 
   
   
