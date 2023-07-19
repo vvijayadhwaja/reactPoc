@@ -48,8 +48,7 @@
         - ls -R build
     post_build:
       commands:
-        - cd build/
-        - aws s3 cp s3://demo-bucket-for-poc/ --recursive
+        - aws s3 cp --recursive build/ s3://demo-bucket-for-poc/
   artifacts:
     files:
       - '**/*'
