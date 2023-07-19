@@ -65,7 +65,7 @@
   #       TemplateURL: https://s3.amazonaws.com/cloudformation-templates-us-east-1/EC2ChooseAMI.template
   #       Parameters:
   #         InstanceType: t2.micro
-  #         KeyName: mykey
+  #         KeyName: mykey 
 
   AWSTemplateFormatVersion: '2010-09-09'
   Resources:
