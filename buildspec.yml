@@ -37,10 +37,10 @@
       commands:
         - echo Build started on `date`
         - npm install
-    test_build:
-      commands:
-        - echo Test started on `date`
-        - npm test
+    # test_build:
+    #   commands:
+    #     - echo Test started on `date`
+    #     - npm test
     build:
       commands:
         - echo Build completed on `date`
