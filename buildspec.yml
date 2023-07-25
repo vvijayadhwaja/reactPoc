@@ -37,15 +37,14 @@
       commands:
         - echo Build started on `date`
         - npm install
-    # test_build:
-    #   commands:
-    #     - echo Test started on `date`
-    #     - npm test
+    test_build:
+      commands:
+        - echo Test started on `date`
+        - npm test
     build:
       commands:
         - echo Build completed on `date`
-        - npm run build     
-        - ls -R build
+        - npm run build 
     # post_build:
     #   commands:
     #     - aws --version
@@ -53,8 +52,8 @@
   artifacts:
     files:
       - '**/*'
-  # discard-paths: no
-  # base-directory: build
+  discard-paths: no
+  base-directory: build
 
   # Deploy:
   #     AWSTemplateFormatVersion: '2010-09-09'
